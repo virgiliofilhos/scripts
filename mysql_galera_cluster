@@ -1,0 +1,69 @@
+Manual installation of repositories
+Create mariadb repos
+
+# vim /etc/yum.repos.d/galera.repo
+
+# contents
+[mariadb]
+name = MariaDB
+baseurl = http://yum.mariadb.org/10.1/centos7-amd64
+gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+gpgcheck=1
+
+#fim
+
+General tools for installations
+# yum install rsync nmap lsof perl-DBI nc
+
+Packages mariadb for install
+# yum install MariaDB-server MariaDB-client MariaDB-common MariaDB-compat MariaDB-shared MariaDB-backup MariaDB-cracklib-password-check galera socat jemalloc
+
+Packages extras mariadb for install (optional)
+# yum install MariaDB-server-debuginfo MariaDB-client-debuginfo MariaDB-shared-debuginfo MariaDB-backup-debuginfo MariaDB-common-debuginfo
+
+
+
+
+# mysql_secure_installation
+configure pass of root
+
+Access to mysql without asking for password
+# vim /etc/my.cnf.d/client.cnf
+# contents
+[client-mariadb]
+user=root
+password=senha
+
+#end
+
+Configure server 01 
+# /etc/my.cnf.d/server.cnf
+
+# contents
+wsrep_on=ON
+wsrep_provider=/usr/lib64/galera/libgalera_smm.so
+wsrep_cluster_address="gcomm://infra-mariadb01,infra-mariadb02,infra-mariadb03"
+wsrep_cluster_name="infra-mariadb"
+wsrep_node_address="infra-mariadb01"
+wsrep_node_name="infra-mariadb01-node"
+wsrep_sst_method=rsync
+binlog_format=row
+default_storage_engine=InnoDB
+innodb_autoinc_lock_mode=2
+bind-address=0.0.0.0
+
+#end
+
+Start cluster
+# galera_new_cluster
+
+# netstat -putan |grep mysql
+
+
+start another nodes 
+# systemctl start mariadb
+
+
+(mysql)> create user repl_user@'%';
+(mysql)> grant replication slave on *.* to repl_user@'%';
+(mysql)> show grants for repl_user@'%';
