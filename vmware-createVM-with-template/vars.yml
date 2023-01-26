@@ -1,0 +1,11 @@
+vcenter_hostname: 192.168.1.182
+notes:  Automated VM creation test
+folder: Projects/dev
+datastore: hdd8tb
+datacenter: Lisbon
+customization_spec: CloudLocalServerDHCP
+esxi_hostname: 192.168.1.180
+state: poweredon
+servers:
+        - { name: centos7_03tf, template: template-c7-BP-2c-2g-2disk }
+        - { name: centos7_04tf, template: template-c7-BP-2c-2g-2disk }       
