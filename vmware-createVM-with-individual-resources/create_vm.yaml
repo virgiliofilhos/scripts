@@ -5,7 +5,7 @@
   gather_facts: false
   tasks:
   - name: Create VMs from iso
-    local_action: # We are doing a 'local action' on this host, instead of itterating through a list in an inventory
+    local_action: # We are doing a 'local action' on this host, instead of itterating through a list in an inventory.
       module: vmware_guest # Which ansible module we are using
       hostname: 192.168.1.182 # Hostname for vCetner
       username: administrator@linuxzera.local # Username for vCenter
