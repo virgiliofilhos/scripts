@@ -1,0 +1,17 @@
+---
+vcenter_hostname: "192.168.1.182"
+vcenter_datacenter: "Lisbon"
+vcenter_validate_certs: false
+vcenter_username: "administrator@linuxzera.local"
+vm_name: "my_newVM_Centos7"
+vm_guestid: "centosGuest"
+vm_disk_gb: 10
+vm_disk_type: "thin"
+vm_disk_datastore: "hdd8tb"
+vm_hw_ram_mb: 1024
+vm_hw_cpu_n: 1
+vm_hw_scsi: "paravirtual"
+vm_net_name: "VM Network"
+vm_net_type: "vmxnet3"
+vcenter_destination_folder: "Projects/dev"
+vm_state: "poweredon"

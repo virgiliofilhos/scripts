@@ -1,0 +1,32 @@
+---
+- name: Create VM
+  hosts: localhost
+#  connection: local
+  gather_facts: false
+  tasks:
+  - name: Create VMs from iso
+    local_action: # We are doing a 'local action' on this host, instead of itterating through a list in an inventory
+      module: vmware_guest # Which ansible module we are using
+      hostname: 192.168.1.182 # Hostname for vCetner
+      username: administrator@linuxzera.local # Username for vCenter
+      password: "#Alvivic200811#" # Password for vCenter
+      validate_certs: no # As this is a lab, I have self signed certificates, the default is yes, so specify no if you have self signed certs
+      folder: Projects/dev # Which folder you are putting this Virtual Machine into (if you don't specify it will go into the root)
+#      template: "{{ item.template }}" # Which template you are cloning from
+      name: newvm001 # The name of the Virtual Machine
+      esxi_hostname: 192.168.1.180 # Which ESXI server are we using to deploy (You can also use cluster and give the cluster name)
+      datacenter: Lisbon
+      state: powered_on
+      vm_disk:
+        disk1:
+          size_gb: 10
+          type: thin
+          datastore: hdd8tb
+      hardware:
+        memory_mb: 2048
+        num_cpus: 2
+        osid: centos64Guest
+        scsi: paravirtual
+        cdrom:
+          type: "iso"
+          iso_path: "iso/linux/CentOS-7-x86_64-DVD-2009.iso"
